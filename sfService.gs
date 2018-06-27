@@ -2,21 +2,21 @@
  * OAuth 2.0 for Salesforce
  * Using OAuth2 for Apps Script - https://github.com/googlesamples/apps-script-oauth2
  * And Salesforce Analytics API - http://www.salesforce.com/us/developer/docs/api_analytics/salesforce_analytics_rest_api.pdf
- 
- * Steps to implement: 
+
+ * Steps to implement:
  * 1. Create spreadsheet (or document) and paste this code in the associated script project
  * 2. Find the project's key
  * 3. Create a connected app in Salesforce with a callback URL https://script.google.com/macros/d/{PROJECT KEY}/usercallback (this requires Admin access)
  * 4. Get the Consumer Key and Consumer Secret and store them in the Script Properties (in the code below as "sfConsumerKey" and "sfConsumerSecret")
- * 5. Set the Project Key and Scope in the function getSfService() 
+ * 5. Set the Project Key and Scope in the function getSfService()
  * 6. Run the showSidebar() function and click the Authorization Url in the sidebar in your spreadsheet/document (reopen your script project if the sidebar doesn't appear)
  * 7. Login and approve the connected app
- 
- * At this point the project has an access token that will expire within a certain time.  If your connected app does not have the "refresh_token" scope, you'll have to 
- * clear the service (clearService()) and repeats steps 6 and 7 in order to get another access token.  
- 
+
+ * At this point the project has an access token that will expire within a certain time.  If your connected app does not have the "refresh_token" scope, you'll have to
+ * clear the service (clearService()) and repeats steps 6 and 7 in order to get another access token.
+
  * While your access token is valid you can use it to request reports or make queries. Use makeRequest() and makeRequestSoql() to get data from Salesforce
- 
+
  * If your connected app does have the "refresh_token" scope, use the refreshToken() function to update the access token
  */
 
@@ -26,9 +26,9 @@ function getSfService() {
   return OAuth2.createService('salesforce')
     .setAuthorizationBaseUrl('https://login.salesforce.com/services/oauth2/authorize')
     .setTokenUrl('https://login.salesforce.com/services/oauth2/token')
-    .setClientId(scriptProperties.getProperty("sfConsumerKey"))  // Added in Script Properties
-    .setClientSecret(scriptProperties.getProperty("sfConsumerSecret"))  // Added in Script Properties
-    .setProjectKey('YOUR PROJECT KEY')  // File > Project Properties
+    .setClientId(scriptProperties.getProperty("3MVG9mclR62wycM3LSqsmwRpJhYfS91kYZ_5Njak086IRYsNm8SKoD0x_AB_iB2ihby9mQHEYee.i.bOHTAz6"))  // Added in Script Properties
+    .setClientSecret(scriptProperties.getProperty("8070489428161480909"))  // Added in Script Properties
+    .setProjectKey("MdiH7JtbCIfFjgqeKDaqxjTJwL6JMRyUE")  // File > Project Properties
     .setCallbackFunction('authCallback')
     .setPropertyStore(PropertiesService.getUserProperties())
     .setScope('api refresh_token')  // https://help.salesforce.com/HTViewHelpDoc?id=remoteaccess_oauth_scopes.htm&language=en_US
@@ -51,7 +51,7 @@ function showSidebar() {
   }
 }
 
-// This function is run after the link in the sidebar is clicked and the user authorizes the app. 
+// This function is run after the link in the sidebar is clicked and the user authorizes the app.
 function authCallback(request) {
   var sfService = getSfService();
   var isAuthorized = sfService.handleCallback(request);
@@ -68,5 +68,3 @@ function clearService() {
   .setPropertyStore(PropertiesService.getUserProperties())
   .reset();
 }
- 
-
