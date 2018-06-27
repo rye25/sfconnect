@@ -22,13 +22,11 @@
 
 // Create the Service
 function getSfService() {
-  var scriptProperties = PropertiesService.getScriptProperties();
   return OAuth2.createService('salesforce')
     .setAuthorizationBaseUrl('https://login.salesforce.com/services/oauth2/authorize')
     .setTokenUrl('https://login.salesforce.com/services/oauth2/token')
-    .setClientId(scriptProperties.getProperty("3MVG9mclR62wycM3LSqsmwRpJhYfS91kYZ_5Njak086IRYsNm8SKoD0x_AB_iB2ihby9mQHEYee.i.bOHTAz6"))  // Added in Script Properties
-    .setClientSecret(scriptProperties.getProperty("8070489428161480909"))  // Added in Script Properties
-    .setProjectKey("MdiH7JtbCIfFjgqeKDaqxjTJwL6JMRyUE")  // File > Project Properties
+    .setClientId("3MVG9mclR62wycM3LSqsmwRpJhYfS91kYZ_5Njak086IRYsNm8SKoD0x_AB_iB2ihby9mQHEYee.i.bOHTAz6")  // Added in Script Properties
+    .setClientSecret("8070489428161480909")  // Added in Script Properties
     .setCallbackFunction('authCallback')
     .setPropertyStore(PropertiesService.getUserProperties())
     .setScope('api refresh_token')  // https://help.salesforce.com/HTViewHelpDoc?id=remoteaccess_oauth_scopes.htm&language=en_US
