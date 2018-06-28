@@ -22,6 +22,7 @@
 
 // Create the Service
 function getSfService() {
+  var scriptProperties = PropertiesService.getScriptProperties();
   return OAuth2.createService('salesforce')
     .setAuthorizationBaseUrl('https://login.salesforce.com/services/oauth2/authorize')
     .setTokenUrl('https://login.salesforce.com/services/oauth2/token')
@@ -66,3 +67,8 @@ function clearService() {
   .setPropertyStore(PropertiesService.getUserProperties())
   .reset();
 }
+
+/**function logRedirectUri() {
+  var service = getService();
+  Logger.log(service.getRedirectUri());
+}*/
