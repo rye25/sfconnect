@@ -67,8 +67,3 @@ function clearService() {
   .setPropertyStore(PropertiesService.getUserProperties())
   .reset();
 }
-
-/**function logRedirectUri() {
-  var service = getService();
-  Logger.log(service.getRedirectUri());
-}*/
