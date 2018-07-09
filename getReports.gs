@@ -1,15 +1,20 @@
 // Use the Analytics API to get report data
 // The try-catch can be removed if you do not need to track errors
-function makeRequest(reportId, sheetName) {
+function makeRequest() {
+  var reportId = '00O1N000005sj5k';
+  var sheetName = 'Sheet1'; 
+  
   var sfService = getSfService();
   var userProps = PropertiesService.getUserProperties();
   var props = userProps.getProperties();
   var name = getSfService().serviceName_;
   var obj = JSON.parse(props['oauth2.' + name]);
   var instanceUrl = obj.instance_url;
-  var queryUrl = instanceUrl + "/services/data/v29.0/analytics/reports/" + reportId + "?includeDetails=true";  // Actual request for report Data
-  var response = UrlFetchApp.fetch(queryUrl, { method : "GET", headers : { "Authorization" : "OAuth "+sfService.getAccessToken() } });
-  var queryResult = JSON.parse(response.getContentText());
+  var queryUrl = instanceUrl + "/services/data/v35.0/analytics/reports/" + reportId + "?includeDetails=true";  // Actual request for report Data
+  var response = UrlFetchApp.fetch(queryUrl, { method : "GET", headers : { "Authorization" : "OAuth "+ sfService.getAccessToken()} });
+  var contentText = response.getContentText();
+  var queryResult = JSON.parse(contentText);
+  Logger.log(contentText);
   
   var ss = SpreadsheetApp.getActive();
   var sheet = ss.getSheetByName(sheetName);
@@ -34,8 +39,9 @@ function makeRequest(reportId, sheetName) {
   }
   
   var lastRow = sheet.getLastRow();
+  var lastColumn = sheet.getLastColumn();
   if (lastRow < 1) lastRow = 1;
-  sheet.getRange(1,1,lastRow, myArray[0].length).clearContent();
+  sheet.getRange(1,1,lastRow, lastColumn).clearContent();
   sheet.getRange(1,1, myArray.length, myArray[0].length).setValues(myArray);
 }
 
